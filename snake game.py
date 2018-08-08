@@ -102,8 +102,24 @@ turtle.onkeypress(right,RIGHT_ARROW)
 ####WRITE YOUR CODE HERE!!
 
 turtle.listen()
+def make_food():
+    min_x = -int(SIZE_X/2/SQUARE_SIZE)+1
+    max_x=int(SIZE_X/2/SQUARE_SIZE)-1
+    min_y=-int(SIZE_Y/2/SQUARE_SIZE)-1
+    max_y=int(SIZE_Y/2/SQUARE_SIZE)+1
+    global food_stamps,food_pos
+    #Generating random x and y
+    food_x=random.randint(min_x,max_x)*SQUARE_SIZE
+    food_y=random.randint(min_y,max_y)*SQUARE_SIZE
+    food.goto(food_x, food_y)    
+    random_stamp=food.stamp()
+    print(random_stamp)
+    print(food.pos())
+    food_stamps.append(random_stamp)
+    #food.shape('trash.gif')
+    food_pos.append(food.pos())
 
-
+    
 def move_snake():
     global food_stamps, food_pos
     my_pos = snake.pos()
@@ -163,6 +179,7 @@ def move_snake():
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
         print("You have eaten the food")
+        make_food()
 
     
 
@@ -183,8 +200,5 @@ for current_food_pos in food_pos:
      food.hideturtle()
     
 move_snake()
-def make_food():
-    min_x = int(SIZE_x/2/SQUARE_SIZE)+1
-    max_x=int(SIZE_x/2/SQUARE_SIZE)-1
-    mi 
+
 
