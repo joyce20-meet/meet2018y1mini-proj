@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Jul  1 23:58:42 2018
-
-Snake Mini project Starter Code
-Name:
-Date:
-"""
 import turtle
 import random #We'll need this later in the lab
 
@@ -111,7 +103,9 @@ turtle.onkeypress(right,RIGHT_ARROW)
 
 turtle.listen()
 
+
 def move_snake():
+    global food_stamps, food_pos
     my_pos = snake.pos()
     x_pos = my_pos[0]
     y_pos = my_pos[1]
@@ -159,18 +153,38 @@ def move_snake():
     ######## SPECIAL PLACE - Remember it for Part 5
     #pop zeroth element in pos_list to get rid of last the last 
     #piece of the tail
+    global food_stamps, food_pos
     old_stamp = stamp_list.pop(0)
     snake.clearstamp(old_stamp)
     pos_list.pop(0)
+    if snake.pos() in food_pos:
+        food_ind=food_pos.index(snake.pos())
+        food.clearstamp(food_stamps[food_ind])
+        food_pos.pop(food_ind)
+        food_stamps.pop(food_ind)
+        print("You have eaten the food")
+
+    
 
     turtle.ontimer(move_snake,TIME_STEP)
-move_snake()
+    
 turtle.register_shape("trash.gif")
 food = turtle.clone()
 food.shape("trash.gif")
 food_pos = [(100,100),(-100,100),(-100,-100),(100,-100)]
 food_stamps = []
-for this_food_pos in food_pos:
-    food.goto(this_food_pos)
-
+for current_food_pos in food_pos:
+     print (current_food_pos)
+     x_pos=current_food_pos[0]
+     y_pos=current_food_pos[1]
+     food.goto(x_pos,y_pos)
+     stamp_ID=food.stamp()
+     food_stamps.append(stamp_ID)
+     food.hideturtle()
+    
+move_snake()
+def make_food():
+    min_x = int(SIZE_x/2/SQUARE_SIZE)+1
+    max_x=int(SIZE_x/2/SQUARE_SIZE)-1
+    mi 
 
