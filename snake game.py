@@ -5,23 +5,39 @@ turtle.tracer(1,0) #This helps the turtle move more smoothly
 
 SIZE_X=800
 SIZE_Y=500
-turtle.setup(SIZE_X, SIZE_Y) #Curious? It's the turtle window  
+turtle.setup(1000,1000) #Curious? It's the turtle window  
                              #size. 
 turtle.penup()
 
 SQUARE_SIZE = 20
 START_LENGTH = 6
+border=turtle.clone()
+border.penup()
+border.goto(0,270)
+border.pendown()
+border.goto(410,270)
+border.goto(-410,270)
+border.left(90)
+border.goto(-410,-270)
+border.left(90)
+border.goto(410,-270)
+border.left(90)
+border.goto(410,270)
+border.penup()
+border.goto(-80,300)
+border.write('snake game!', font=("Arial",30,"normal"))
+border.hideturtle()
+border.penup()
+border.goto(-60,-450)
+border.write('score'+ " " +str(0), font=("Arial",30,"normal"))
 
 #Initialize lists
 pos_list = []
 stamp_list = []
 food_pos = []
-food_stamps = []
-
 #Set up positions (x,y) of boxes that make up the snake
 snake = turtle.clone()
 snake.shape("square")
-
 #Hide the turtle object (it's an arrow - we don't need to see it)
 turtle.hideturtle()
 
@@ -47,8 +63,8 @@ for i in range(START_LENGTH) :
     ID = snake.stamp()
     print(ID)
     stamp_list.append(ID)
-
-
+    
+    
 ###############################################################
 #                    PART 2 -- READ INSTRUCTIONS!!
 ###############################################################
@@ -116,10 +132,9 @@ def make_food():
     print(random_stamp)
     print(food.pos())
     food_stamps.append(random_stamp)
-    #food.shape('trash.gif')
     food_pos.append(food.pos())
-
     
+    score_list=[]
 def move_snake():
     global food_stamps, food_pos
     my_pos = snake.pos()
@@ -160,7 +175,8 @@ def move_snake():
 
     #Stamp new element and append new stamp in list
     #Remember: The snake position changed - update my_pos()
-
+    if snake.pos() in pos_list:
+        quit()
     my_pos=snake.pos() 
     pos_list.append(my_pos)
     new_stamp = snake.stamp()
@@ -170,9 +186,7 @@ def move_snake():
     #pop zeroth element in pos_list to get rid of last the last 
     #piece of the tail
     global food_stamps, food_pos
-    old_stamp = stamp_list.pop(0)
-    snake.clearstamp(old_stamp)
-    pos_list.pop(0)
+    
     if snake.pos() in food_pos:
         food_ind=food_pos.index(snake.pos())
         food.clearstamp(food_stamps[food_ind])
@@ -180,6 +194,13 @@ def move_snake():
         food_stamps.pop(food_ind)
         print("You have eaten the food")
         make_food()
+    else:
+        
+        old_stamp = stamp_list.pop(0)
+        snake.clearstamp(old_stamp)
+        pos_list.pop(0)
+        
+        
 
     
 
